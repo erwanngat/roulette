@@ -1,0 +1,24 @@
+h1{
+    text-align: center;
+}
+
+.corps{
+    position: relative;
+    left: 600px;
+    display: inline-block;
+}
+
+
+.deco{
+    position: relative;
+    left: 1000px;
+    bottom: 200px;
+    display: inline-block;
+}
+
+.jouer{
+    position: relative;
+    left: 400px;
+    top: 50px;
+    display: inline-block;
+}
