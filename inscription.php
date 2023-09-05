@@ -1,69 +1,63 @@
 <?php
+require_once('BDD_Manager.php');
 
-    session_start();
+$message_erreur = '';
 
+// Vérifie que le bouton du formulaire a été cliqué
+if(isset($_POST['btnSignup'])) {
 
-    if (isset($_POST['nom']) && isset($_POST['mdp'])){
+	// Vérifie que les champs existent et ne sont pas vides
+	if(isset($_POST['nom']) && $_POST['nom'] != '' &&
+		isset($_POST['motdepasse']) && $_POST['motdepasse'] != '') {
 
-        $_SESSION['login'] = $_POST['nom']; 
-          header('location: roulette.php');
-    }
-
-    try{
-        $bdd = new PDO('mysql:host=localhost;dbname=roulette;charset=utf8',
-        'root',
-        '');
-        $bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    }
-    catch (Exception $e){
-        die('Erreur:'. $e->getMessage());
-    }
-    
-
-    if (isset($_POST['nom']) && isset($_POST['mdp']) && isset($_POST['argent'])){
-
-        $nom = $_POST['nom'];
-        $mdp = $_POST['mdp'];
-        $argent = $_POST['argent'];
-
-        $sql = "INSERT INTO joueur (nom, mdp, argent) VALUES (:nom, :mdp, :argent)";
-		$stmt = $bdd->prepare($sql);
-		$stmt->bindParam(':nom', $nom);
-		$stmt->bindParam(':mdp', $mdp);
-        $stmt->bindParam(':argent', $argent);
-
-        try {
-		    $stmt->execute();
-		   
-		}
-    catch(Exception $e) {
-        
-        echo "Erreur lors de l'envoi des données à la base de données: " . $e->getMessage();
-    }
-    }
-
-$bdd = null;
+		// Appelle des fonctions de BDD_Manager.php pour ajouter l'utilisateur en BDD puis le connecter
+		ajouteUtilisateur($_POST['nom'], $_POST['motdepasse']);
+		connecteUtilisateur($_POST['nom'], $_POST['motdepasse']);
+		
+		// Renvoie l'utilisateur vers le jeu de la roulette
+		header('Location: roulette.php');
+	} else {
+		$message_erreur = 'Il faut remplir les champs!';
+	}
+}
+	
 ?>
-<!doctype html>
+
+<!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="utf-8">
-    <title>test</title>
-    <link rel="stylesheet" href="connexion.css">
+	<meta charset="UTF-8">
+	<title>Inscription</title>
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+	<link rel="stylesheet" href="style.css" />
 </head>
 <body>
+<header id="head">
+	<h2 class="alert alert-warning">Inscription</h2>
+</header>
+<br>
+<?php if($message_erreur != '')
+		echo "<div class=\"alert alert-danger errorMessage\">$message_erreur</div>";
+?>
 
-<div class="corps">
-<form action="inscription.php" method="post">
- <p>Identifiant : <input type="text" name="nom" /></p>
- <p>Mot de passe : <input type="password" name="mdp" /></p>
- <label for="argent">Argent:</label>
-<input type="number" id="argent" name="argent" value="500" required>
+<form method="post" action="inscription.php">
+	<table id="inscriptionTable">
+		<tr>
+			<td colspan="2"><input type="text" name="nom" placeholder="Identifiant" /></td>
+		</tr>
 
- <p><input type="submit" value="S'inscrire" action="roulette.php"></p>
-</a>
+		<tr>
+			<td colspan="2"><input type="text" name="motdepasse" placeholder="Mot de passe" /></td>
+		</tr>
+
+		<tr>
+			<td><br><a href="connexion.php"><div class="btn btn-info">Retour à la connexion</div></a></td>
+			<td><br><input class="btn btn-primary" name="btnSignup" type="submit" value="S'inscrire" /></td>
+		</tr> 
+	</table>
 </form>
-</div>
+
 
 </body>
 </html>

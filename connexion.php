@@ -1,83 +1,61 @@
-<?php 
+<?php
+require_once('BDD_Manager.php');
 
-$login_valide = "erwann";
-$mdp_valide = "oh";
+$message_erreur = '';
 
-if (isset($_POST['nom']) && isset($_POST['mdp'])){
-
-
-    if ($login_valide == $_POST['nom'] && $mdp_valide == $_POST['mdp']) {
-
-        try{
-            $bdd = new PDO('mysql:host=localhost;dbname=roulette;charset=utf8',
-            'root',
-            '');
-        }
-        catch (Exception $e){
-            die('Erreur:'. $e->getMessage());
-        }
-        
-        $requete = 'SELECT * FROM joueur;';
-        $reponse = $bdd->query($requete);
-
-        while($data = $reponse->fetch()){
-            echo'Nom:'.$data['nom'];
-        }
-
-        $reponse->closeCursor();
-
-        session_start();
-
-        $_SESSION['login'] = $_POST['nom']; 
-        echo $_SESSION['login'];
-
-        header ('location: roulette.php');
+// Vérifie que le bouton du formulaire a été cliqué
+if(isset($_GET['btnConnect'])) {
+	// Vérifie que les champs existent et ne sont pas vides
+	if(isset($_GET['nom']) && $_GET['nom'] != '' &&
+		isset($_GET['motdepasse']) && $_GET['motdepasse'] != '') {
+		$message_erreur = connecteUtilisateur($_GET['nom'], $_GET['motdepasse']);
+		if($message_erreur == '') {
+			// Si pas d'erreur, renvoie l'utilisateur vers le jeu de la roulette
+			header('Location: roulette.php');
+		}
+	}
 }
-}
-
-if(isset($_SESSION['login'])){
-    header('location: roulette.php');
-}
-
-if(isset($_GET['deco'])){
-
-    session_start ();
-
-    session_unset ();
-
-    session_destroy ();
-
-    header ('location: connexion.php');
-}
-
+	
 ?>
 
-
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="utf-8">
-    <title>test</title>
-    <link rel="stylesheet" href="connexion.css">
+	<meta charset="UTF-8">
+	<title>Connexion</title>
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+	<link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <h1>Le jeux de la roulette</h1>
+<header id="head">
+	<h2 class="alert alert-warning">Connexion</h2>
+</header>
+<br>
+<?php if($message_erreur != '')
+	echo "<div class=\"alert alert-danger errorMessage\">$message_erreur</div>";
+?>
 
-<div class="corps">
-<form action="connexion.php" method="post">
- <p>Identifiant : <input type="text" name="nom" /></p>
- <p>Mot de passe : <input type="password" name="mdp" /></p>
- </div>
- <div class="conn">
- <p><input type="submit" value="Se connecter"/></p>
+<form method="get" action="connexion.php">
+	<table id="connexionTable">
+		<tr>
+			<td colspan="3"><input type="text" name="nom" placeholder="Identifiant" /></td>
+		</tr>
+
+		<tr>
+			<td colspan="3"><input type="password" name="motdepasse" placeholder="Mot de passe" /></td>
+		</tr>
+
+		<tr>
+			<td><br><a href="#"><input class="btn btn-warning" name="btnErase" type="reset" value="Effacer" /></a></td>
+			<td><br><a href="inscription.php"><div class="btn btn-info">S'inscrire</div></a></td>
+			<td><br><input class="btn btn-primary" name="btnConnect" type="submit" value="Jouer" /></td>
+		</tr> 
+	</table>
 </form>
-</div>
+<br><br>
 
-<div class="inscr">
-<a href="inscription.php">
-<button>Inscription</button>
-</a>
-</div>
+
+
 </body>
 </html>
-
