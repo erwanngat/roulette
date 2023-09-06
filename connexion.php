@@ -3,6 +3,10 @@ require_once('BDD_Manager.php');
 
 $message_erreur = '';
 
+if(isset($_GET['deco'])){
+	session_destroy();
+}
+
 // Vérifie que le bouton du formulaire a été cliqué
 if(isset($_GET['btnConnect'])) {
 	// Vérifie que les champs existent et ne sont pas vides
@@ -15,6 +19,7 @@ if(isset($_GET['btnConnect'])) {
 		}
 	}
 }
+
 	
 ?>
 

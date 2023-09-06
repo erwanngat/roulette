@@ -6,6 +6,10 @@ $message_info = '';
 $message_erreur = '';
 $gagne = false;
 
+if(!isset($_SESSION['joueur_id'])){
+	header('location: connexion.php');
+}
+
 if(isset($_GET['btnJouer'])) {
 	if($_GET['mise'] < 0) {
 		$message_erreur = 'La mise doit être positive';

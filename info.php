@@ -1,6 +1,10 @@
 <?php
 require_once('BDD_Manager.php');
 
+if(!isset($_SESSION['joueur_id'])){
+	header('location: connexion.php');
+}
+
 $user = $_SESSION['joueur_id'];
 
 $bdd = initialiseConnexionBDD();
