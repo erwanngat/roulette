@@ -131,6 +131,12 @@ if($message_info != '') {
 		</tr>
 	</table>
 	</form>
+
+	<div class='info'>
+		<a href="info.php">
+			<button>info</button>
+		</a>
+	</div>
 	
 
 	<!-- Les scripts Javascript juste avant le <body> fermant -->

@@ -7,7 +7,7 @@ session_start();
 function initialiseConnexionBDD() {
 	$bdd = null;
 	try {
-		$bdd = new PDO('mysql:host=localhost;dbname=roulette;charset=utf8', 
+		$bdd = new PDO('mysql:host=localhost;dbname=bdd_roulette;charset=utf8', 
 			'root', 
 			''
 		);	

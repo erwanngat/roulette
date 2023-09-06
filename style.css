@@ -144,3 +144,9 @@ input:checked + .slider:before {
   border-radius: 50%;
 }
 /* - checkbox slider */
+
+.info{
+  position: absolute;
+  top: 9%;
+  right: 5%;
+}
