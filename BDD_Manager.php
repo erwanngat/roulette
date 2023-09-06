@@ -25,9 +25,9 @@ function connecteUtilisateur($utilisateur, $motdepasse) {
 	$res = '';
 	$bdd = initialiseConnexionBDD();
 	if($bdd) {
-		$sql = 'SELECT * FROM roulette_joueur WHERE nom = ? AND motdepasse = ?';
+		$sql = 'SELECT * FROM roulette_joueur WHERE nom = ?';
         $result = $bdd->prepare($sql);
-		$result->execute([$utilisateur, $motdepasse]);
+		$result->execute([$utilisateur]);
 
 		/* DEBUG pour vérifier la requête
 			var_dump($sql);
@@ -35,7 +35,7 @@ function connecteUtilisateur($utilisateur, $motdepasse) {
 			die();
 		 */
 		$data = $result->fetch();
-		if($data) {
+		if($data && password_verify($motdepasse, $data['motdepasse'])) {
 			$_SESSION['joueur_id'] = intval($data['identifiant']);
 			$_SESSION['joueur_nom'] = $data['nom'];
 			$_SESSION['joueur_argent'] = intval($data['argent']);
@@ -53,7 +53,7 @@ function ajouteUtilisateur($nom, $motdepasse) {
 	$bdd = initialiseConnexionBDD();
 	if($bdd) {
 		$query = $bdd->prepare('INSERT INTO roulette_joueur (nom, motdepasse, argent) VALUES (:t_nom, :t_mdp, 500);');
-		$query->execute(array('t_nom' => $nom, 't_mdp' => $motdepasse));
+		$query->execute(array('t_nom' => $nom, 't_mdp' => password_hash($motdepasse, PASSWORD_DEFAULT)));
 	}
 }
 
