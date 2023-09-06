@@ -48,7 +48,7 @@ if(isset($_POST['btnSignup'])) {
 		</tr>
 
 		<tr>
-			<td colspan="2"><input type="text" name="motdepasse" placeholder="Mot de passe" /></td>
+			<td colspan="2"><input type="password" name="motdepasse" placeholder="Mot de passe" /></td>
 		</tr>
 
 		<tr>

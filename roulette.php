@@ -23,7 +23,7 @@ if(isset($_GET['btnJouer'])) {
 		$miseJoueur = intval($_GET['mise']);
 		$numeroJoueur = intval($_GET['numero']);
 		$message_info = "La bille s'est arrêtée sur le $numero! ";
-		if($_GET['numero']!= 0) {
+		if($_GET['numero']!= "") {
 			$message_info .= "Vous avez misé sur le ".$numeroJoueur."!";
 			if($numeroJoueur == $numero) {
 				$message_resultat = "Jackpot! Vous gagnez ". $miseJoueur*35 ."€ !";

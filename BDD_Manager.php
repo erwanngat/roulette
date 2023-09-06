@@ -25,14 +25,16 @@ function connecteUtilisateur($utilisateur, $motdepasse) {
 	$res = '';
 	$bdd = initialiseConnexionBDD();
 	if($bdd) {
-		$sql = 'SELECT * FROM roulette_joueur WHERE nom ="'.$utilisateur.'" AND motdepasse = "'.$motdepasse.'";';
-		$result = $bdd->query($sql);
+		$sql = 'SELECT * FROM roulette_joueur WHERE nom = ? AND motdepasse = ?';
+        $result = $bdd->prepare($sql);
+		$result->execute([$utilisateur, $motdepasse]);
+
 		/* DEBUG pour vérifier la requête
 			var_dump($sql);
 			var_dump($result->fetch());
 			die();
 		 */
-			$data = $result->fetch();
+		$data = $result->fetch();
 		if($data) {
 			$_SESSION['joueur_id'] = intval($data['identifiant']);
 			$_SESSION['joueur_nom'] = $data['nom'];
