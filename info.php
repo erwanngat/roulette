@@ -52,7 +52,7 @@ $annees = $ancien->y;
 $mois = $ancien->m;
 $jours = $ancien->d;
 
-echo "Le joueur a donc fait ça première partie il y a $annees années, $mois mois, $jours jours";
+echo "Le joueur a donc fait ça première partie il y a $annees années, $mois mois, $jours jours <br>";
 
 
 ?>
@@ -65,6 +65,8 @@ echo "Le joueur a donc fait ça première partie il y a $annees années, $mois m
     <title>Info</title>
 </head>
 <body>
-    
+    <a href="roulette.php">
+        <button>revenir en arrière</button>
+    </a>
 </body>
 </html>
