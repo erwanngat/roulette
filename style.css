@@ -4,7 +4,7 @@
  * Bastien THOUVEREZ
  */
 
-h2 { 
+ h2 { 
 	text-align: center; 
 }	
 
@@ -55,8 +55,6 @@ table {
 .errorMessage { 
 	text-align: center; 
 }
-
-
 
 #versionInfo {
 	position: absolute;
@@ -145,8 +143,32 @@ input:checked + .slider:before {
 }
 /* - checkbox slider */
 
-.info{
-  position: absolute;
-  top: 9%;
-  right: 5%;
+#stat {
+  margin: auto;
+  border-collapse: collapse;
+  width: 600px;
+}
+
+#statTh {
+  text-align: center;
+  background-color: lightgrey;
+  padding: 10px;
+  font-weight: bold;
+}
+
+table td {
+  padding: 4px;
+  text-align: center;
+}
+
+#statTd{
+  padding: 10px;
+}
+
+.red-row {
+  background-color: #FA8072;
+}
+
+.green-row{
+  background-color: lightgreen;
 }
